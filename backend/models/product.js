@@ -17,7 +17,7 @@ const productSchema = new Schema({
 		type: Number,
 		requied: true,
 	},
-	sellerId: {
+	seller_id: {
 		type: Number,
 		ref: 'sellers',
 		requied: true,

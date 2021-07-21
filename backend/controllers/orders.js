@@ -1,0 +1,1 @@
+const Orders = required('../models/order');

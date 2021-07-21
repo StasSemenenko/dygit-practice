@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const orderSchema = new Schema({
-	orderNumber: {
+	order_number: {
 		type: Number,
 		required: true,
 	},

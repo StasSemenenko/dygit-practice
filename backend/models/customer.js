@@ -1,11 +1,11 @@
 const { Schema, model } = require('mongoose');
 
 const customerSchema = new Schema({
-	firstName: {
+	first_name: {
 		type: String,
 		required: true,
 	},
-	lastName: {
+	last_name: {
 		type: String,
 		required: true,
 	},
@@ -13,7 +13,7 @@ const customerSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	phoneNumber: {
+	phone_number: {
 		type: Number,
 		required: true,
 	},
@@ -25,7 +25,7 @@ const customerSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	zipCode: {
+	zip_code: {
 		type: Number,
 		required: true,
 	},

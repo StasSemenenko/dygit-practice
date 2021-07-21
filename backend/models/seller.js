@@ -1,19 +1,19 @@
 const { Schema, model } = require('mongoose');
 
 const sellerSchema = new Schema({
-	firstName: {
+	first_name: {
 		type: String,
 		required: true,
 	},
-	lastName: {
+	last_name: {
 		type: String,
 		required: true,
 	},
-	shopName: {
+	shop_name: {
 		type: String,
 		required: true,
 	},
-	phoneNumber: {
+	phone_number: {
 		type: Number,
 		required: true,
 	},
@@ -24,6 +24,7 @@ const sellerSchema = new Schema({
 	email: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 	logo: {
 		type: String,
