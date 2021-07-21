@@ -1,4 +1,6 @@
 {
 	"port": 8000,
-	"mongo": "mongodb://localhost/dygit-practice"
+	"mongo": "mongodb://localhost/dygit-practice",
+	"session_key": "keyboard dog",
+	"jwt_key": "heets from iqos"
 }

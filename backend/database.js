@@ -5,6 +5,7 @@ module.exports.connect = () => {
 	mongoose.connect(config.mongo, {
 		useUnifiedTopology: true,
 		useNewUrlParser: true,
+		useCreateIndex: true,
 	}).then(() => {
 		console.log('Mongodb success connected'.blue);
 	}).catch(() => {
