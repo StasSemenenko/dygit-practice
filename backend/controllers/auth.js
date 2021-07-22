@@ -8,8 +8,7 @@ module.exports = {
 		const {
 			first_name, last_name, shop_name, phone_number, password, email, logo,
 		} = req.body;
-		const seller = await Seller.findOne({ email }).lean();
-		if (!seller) {
+		try {
 			await Seller.create({
 				first_name,
 				last_name,
@@ -19,14 +18,17 @@ module.exports = {
 				email,
 				logo,
 			});
-			res.send({ message: 'success' });
-		} else {
-			res.status(400).send({ error: 'User already exist' });
+		} catch (e) {
+			if (e.code === 11000) {
+				return res.status(422).send({ error: 'User already exist' });
+			}
+			return res.status(500).send({ error: 'Server error!' });
 		}
+		return res.send({ message: 'success' });
 	},
 	async signIn(req, res) {
 		const { email, password } = req.body;
-		const seller = await Seller.findOne({ email, password: md5(password) });
+		const seller = await Seller.findOne({ email, password: md5(password) }, '+password');
 		if (!seller) return res.status(500).send({ error: 'User not found' });
 		const token = jwt.sign({ id: seller.id }, config.jwt_key);
 		req.session.token = token;

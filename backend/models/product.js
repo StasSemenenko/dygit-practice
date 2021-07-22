@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 const productSchema = new Schema({
 	title: {
@@ -9,7 +9,7 @@ const productSchema = new Schema({
 		type: String,
 		requied: true,
 	},
-	imge: {
+	image: {
 		type: String,
 		requied: true,
 	},
@@ -17,10 +17,10 @@ const productSchema = new Schema({
 		type: Number,
 		requied: true,
 	},
-	seller_id: {
-		type: Number,
-		ref: 'sellers',
-		requied: true,
+	seller: {
+		type: Types.ObjectId,
+		ref: 'Seller',
+		required: true,
 	},
 
 });

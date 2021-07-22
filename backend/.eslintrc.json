@@ -15,6 +15,7 @@
         "no-tabs": "off",
         "indent": [
             "error", "tab"
-        ]
+        ],
+        "eol-last": "off"
     }
 }

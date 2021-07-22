@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 const orderSchema = new Schema({
 	order_number: {
@@ -6,28 +6,31 @@ const orderSchema = new Schema({
 		required: true,
 	},
 	seller: {
-		type: String,
+		type: Types.ObjectId,
 		ref: 'Seller',
 		required: true,
 	},
 	customer: {
-		type: String,
+		type: Types.ObjectId,
 		ref: 'Customer',
 		required: true,
 	},
-	products: {
-		type: String,
-		ref: 'Product',
-		required: true,
-	},
+	products: [{
+		_id: false,
+		product: {
+			type: Types.ObjectId,
+			ref: 'Product',
+			required: true,
+		},
+		quantity: {
+			type: Number,
+			required: true,
+		},
+	}],
 	status: {
 		type: String,
 		required: true,
 		enum: ['created', 'processing', 'shipped', 'received', 'cancelled'],
-	},
-	quantity: {
-		type: Number,
-		required: true,
 	},
 	amount: {
 		type: Number,

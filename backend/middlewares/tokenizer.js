@@ -6,8 +6,7 @@ module.exports = (req, res, next) => {
 		const data = jwt.verify(req.session.token, config.jwt_key);
 		req.user = data.id;
 		next();
-	}
-	else {
+	} else {
 		res.status(403).send({ error: 'Forbidden!' });
 	}
 };
