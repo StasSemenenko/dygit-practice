@@ -16,10 +16,10 @@ app.use(session({
 	store: new FileStore({}),
 	secret: config.session_key,
 	resave: true,
-	saveUninitialized: true,
+	saveUninitialized: false,
 }));
 app.use(helmet());
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.use('/api', routes);
 
 app.listen(config.port, () => {

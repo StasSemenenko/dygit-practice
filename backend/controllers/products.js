@@ -3,7 +3,7 @@ const Product = require('../models/product');
 
 module.exports = {
 	async getAllProducts(req, res) {
-		const products = await Product.find({ seller: req.user }).lean();
+		const products = await Product.find({ seller: req.user }).populate('seller').lean();
 		res.send({ products });
 	},
 

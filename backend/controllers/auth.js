@@ -32,6 +32,7 @@ module.exports = {
 		if (!seller) return res.status(500).send({ error: 'User not found' });
 		const token = jwt.sign({ id: seller.id }, config.jwt_key);
 		req.session.token = token;
+		req.session.save();
 		// req.session.cookie.expires = new Date(Date.now() + 3600000);
 		return res.send({ message: 'success' });
 	},
