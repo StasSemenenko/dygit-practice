@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route, Link, } from "react-router-dom";
 import { Button, PageHeader} from 'antd';
 import classes from './App.css';
 import { ProductList} from './components/products';
+import { CustomersList } from './components/customers';
 import { ProductsAdd } from './components/products/add';
 import { ProductsEdit } from './components/products/edit';
 import { OrdertList } from './components/orders';
@@ -16,8 +17,11 @@ function App() {
      <BrowserRouter>
       <div>
         <Switch>
-          <Route exact path="/customers">
+          <Route exact path="/sellers">
             <SellerList/>
+          </Route>
+          <Route exact path="/customers">
+            <CustomersList/>
           </Route>
           <Route exact path="/products">
             <ProductList/>

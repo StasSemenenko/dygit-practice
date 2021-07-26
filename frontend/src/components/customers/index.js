@@ -1,4 +1,4 @@
-import { listColumns } from '../../constants/sellers';
+import { listColumns } from '../../constants/customers';
 import http from '../../services/http';
 import { Table, PageHeader, Form, Input, Button, Upload,} from 'antd';
 import { useEffect, useState } from 'react';
@@ -10,15 +10,15 @@ const style = {
 	button: {}
 }
 
-export const SellerList = () => {
-	const [sellers, setSellers] = useState([]);
-	const getSellers = async () => {
+export const CustomersList = () => {
+	const [customers, setCustomers] = useState([]);
+	const getCustomers = async () => {
 		// const res = await Axios.post('/auth/signin', {  email: 'stanislavsemenenko@gmail.com', password: '123465' });
-		const res = await http.get('/sellers');
-		setSellers(res.data.sellers);
+		const res = await http.get('/customers');
+		setCustomers(res.data.customers);
 	}
 	useEffect(() => {
-		getSellers();
+		getCustomers();
 	},[]);
 
 	// const normFile = (e: any) => {
@@ -37,7 +37,7 @@ export const SellerList = () => {
 		    	// subTitle="This is a subtitle"
 	  		>
 				<h1>Sellers</h1>
-				<Table xs ={24} md={{span: 12, offset: 6}} columns={listColumns} dataSource={sellers} rowKey='_id'/>
+				<Table xs ={24} md={{span: 12, offset: 6}} columns={listColumns} dataSource={customers} rowKey='_id'/>
 			</PageHeader>
 		</>
 	)

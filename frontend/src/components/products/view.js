@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import http from '../../services/http';
 import { useParams } from 'react-router-dom';
 import { Card, Avatar } from 'antd';
 import { EditOutlined, EllipsisOutlined, SettingOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -7,32 +8,26 @@ const { Meta } = Card;
 
 export const ProductView = () => {
 	const {id} = useParams();
+	const [product, setProduct] = useState([]);
+	const getProduct = async () => {
+		const res = await http.get('/products/'+ id );
+		setProduct(res.data.product);
+	}
 	useEffect(() => {
-
+		getProduct();
 	},[]);
 
 	return (
-		<Card
-		    style={{ width: 300 }}
-		    cover={
-		     	<img
-			        alt="example"
-			        src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-	      		/>
-    		}
-		    actions={[
-				<a href='/products'><button><EditOutlined/></button></a>,
-				<a href='/products'><button><DeleteOutlined/></button></a>,
-		    ]}
-  		>
-	  		<Meta
-	    	//   avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-	     		title="Card title"
-	    		description="This is the description"
-	    	/>
-			<>
-				Produtc view : {id}
-			</>
-  		</Card>
+		<div style={{color: "red"}}>
+			<Card title={product.image} style={{ width: 300 }}>
+				<p>{product.title}</p>
+	      		<p>{product.description}</p>
+	     		<p>{product.price}</p>
+				<p>
+				<button><EditOutlined /></button>
+				<button><DeleteOutlined /></button>
+				</p>
+	    	</Card>
+		</div>
 	)
 };
