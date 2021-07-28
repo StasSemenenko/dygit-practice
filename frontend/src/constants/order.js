@@ -1,24 +1,30 @@
+import { Link } from "react-router-dom";
 import { Typography } from "antd";
 
 export const listColumns = [
 	{
+		title: '_id',
+	    dataIndex: '_id',
+	    key: '_id',
+		render: (text, record) => <Link to={'/orders/view/'+record._id}>{text}</Link>,
+		sorter: (a, b) => {return a._id.localeCompare(b._id)},
+	},
+	{
 		title: 'order_number',
 	    dataIndex: 'order_number',
 	    key: 'order_number',
-		render: text => <a>{text}</a>,
-		sorter: (a, b) => {return a.title.localeCompare(b.title)},
 	},
 	{
 		title: 'customer',
 		dataIndex: 'customer',
 		key: 'customer',
-		sorter: (a, b) => {return a.description.localeCompare(b.description)},
+		sorter: (a, b) => {return a.customer.localeCompare(b.customer)},
 	},
 	{
 		title: 'products',
 		dataIndex: 'products',
 		key: 'products',
-		sorter: (a, b) => {return a.products.localeCompare(b.products)},
+		// sorter: (a, b) => {return a.products.localeCompare(b.products)},
 	},
 	{
 		title: 'status',

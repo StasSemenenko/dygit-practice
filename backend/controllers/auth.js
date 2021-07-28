@@ -28,6 +28,7 @@ module.exports = {
 	},
 	async signIn(req, res) {
 		const { email, password } = req.body;
+		console.log(req.body);
 		const seller = await Seller.findOne({ email, password: md5(password) }, '+password');
 		if (!seller) return res.status(500).send({ error: 'User not found' });
 		const token = jwt.sign({ id: seller.id }, config.jwt_key);

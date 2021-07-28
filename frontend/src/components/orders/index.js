@@ -12,7 +12,7 @@ const style = {
 export const OrdertList = () => {
 	const [orders, setOrders] = useState([]);
 	const getOrders = async () => {
-		const r = await http.post('/auth/signin', {  email: 'stanislavsemenenko@gmail.com', password: '123465' });
+		// const r = await http.post('/auth/signin', {  email: 'stanislavsemenenko@gmail.com', password: '123465' });
 		const res = await http.get('/orders');
 		const updateOrders = res.data.orders.map(o => {
 			let products = '';

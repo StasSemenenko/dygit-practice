@@ -9,7 +9,7 @@ const style = {
 	button: {}
 }
 
-export const OrdersAdd = () => {
+export const CustomersEdit = () => {
 	const onFinish = (values) => {
 		console.log('Success:', values);
 	};
@@ -18,110 +18,95 @@ export const OrdersAdd = () => {
 		console.log('Failed:', errorInfo);
 	};
 
-	const [orders, setOrders] = useState([]);
-	const postOrders = async () => {
-		const res = await http.post('/orders');
-		setOrders(res.data.orders);
+	const [customers, setCustomers] = useState([]);
+	const getCustomers = async () => {
+		const res = await http.get('/customers');
+		setProducts(res.data.customers);
 	}
 	useEffect(() => {
-		postOrders();
+		getCustomers();
 	},[]);
 
 	return (
 		<PageHeader className="site-page-header" style={style.border}
-	    	onBack={() => null}
-	    	title="Add product">
+    		onBack={() => null}
+    		title="Edit customer">
 		<Form style={style.border}
 			name="basic"
 			labelCol={{
 				span: 8,
 			}}
-			wrapperCol={{
+		  	wrapperCol={{
 				span: 8,
 			}}
 			initialValues={{
 				remember: true,
 			}}
-			onFinish={onFinish}
-			onFinishFailed={onFinishFailed}
+		  	onFinish={onFinish}
+		  	onFinishFailed={onFinishFailed}
 		>
 			<Form.Item style={style.input}
-				label="order_number"
-				name="order_number"
+				label="Name"
+				name="name"
 				rules={[
-			  	{
-					required: true,
-					message: 'Please input order number!',
-				},
+					{
+						required: true,
+						message: 'Please input product name!',
+					},
 				]}
-		 	>
+			>
 				<Input />
 			</Form.Item>
+	
+			<Form.Item
+				label="Description"
+				name="description"
+				rules={[
+					{
+						required: true,
+						message: 'Please input description!',
+					},
+				]}
+			>
+				<Input />
+			</Form.Item>
+
+			<Form.Item
+		        name="upload"
+		        label="Upload"
+		        valuePropName="fileList"
+	        	// getValueFromEvent={normFile}
+	    	>
+	        	<Upload name="logo" action="/upload.do" listType="picture">
+	        		<Button icon={<UploadOutlined />}>Click to upload</Button>
+	        	</Upload>
+	    	</Form.Item>
+
+			<Form.Item
+				label="Price"
+				name="price"
+				rules={[
+					{
+						required: true,
+						message: 'Please input price!',
+					},
+				]}
+			>
+				<Input />
+		  	</Form.Item>
 		
 			<Form.Item
-				label="customer"
-				name="customer"
-				rules={[
-					{
-						required: true,
-						message: 'Please input customer!',
-					},
-				]}
-			>
-				<Input />
-			</Form.Item>
-
-			<Form.Item
-		        name="products"
-		        label="products"
-		        rules={[
-					{
-						required: true,
-						message: 'Please input products!',
-					},
-				  ]}
-		    >
-				<Input />
-		    </Form.Item>
-
-			<Form.Item
-				label="quantity"
-				name="quantity"
-				rules={[
-					{
-						required: true,
-						message: 'Please input quantity!',
-					},
-				]}
-			>
-				<Input />
-			</Form.Item>
-
-			<Form.Item
-				label="amount"
-				name="amount"
-				rules={[
-					{
-						required: true,
-						message: 'Please input amount!',
-					},
-				]}
-			>
-				<Input />
-			</Form.Item>
-			 
-			<Form.Item
 				wrapperCol={{
-				  offset: 8,
-				  span: 8,
+					offset: 8,
+					span: 8,
 				}}
 			>
 				<Button
 					type="primary" htmlType="submit">
-				 	Submit
+			  		Submit
 				</Button>
-			</Form.Item>
-			</Form>
+		 	</Form.Item>
+		</Form>
 		</PageHeader>
-	);
+	  );
 }

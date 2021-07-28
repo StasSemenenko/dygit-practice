@@ -19,7 +19,7 @@ export const ProductView = () => {
 
 	return (
 		<div style={{color: "red"}}>
-			<Card title={product.image} style={{ width: 300 }}>
+			<Card title="title" style={{ width: 300 }}>
 				<p>{product.title}</p>
 	      		<p>{product.description}</p>
 	     		<p>{product.price}</p>

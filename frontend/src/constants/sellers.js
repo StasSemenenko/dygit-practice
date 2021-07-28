@@ -5,7 +5,7 @@ export const listColumns = [
 		title: '_id',
 		dataIndex: '_id',
 		key: '_id',
-		render: (text, record) => <Link to={'/products/view/'+record._id}>{text}</Link>,
+		render: (text, record) => <Link to={'/sellers/view/'+record._id}>{text}</Link>,
 		sorter: (a, b) => {return a._id.localeCompare(b._id)},
 	},
 	{	

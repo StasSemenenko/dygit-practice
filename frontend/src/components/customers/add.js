@@ -9,7 +9,7 @@ const style = {
 	button: {}
 }
 
-export const OrdersAdd = () => {
+export const CustomersAdd = () => {
 	const onFinish = (values) => {
 		console.log('Success:', values);
 	};
@@ -18,19 +18,19 @@ export const OrdersAdd = () => {
 		console.log('Failed:', errorInfo);
 	};
 
-	const [orders, setOrders] = useState([]);
-	const postOrders = async () => {
-		const res = await http.post('/orders');
-		setOrders(res.data.orders);
+	const [customers, setCustomers] = useState([]);
+	const postCustomers = async () => {
+		const res = await http.post('/customers');
+		setOrders(res.data.customers);
 	}
 	useEffect(() => {
-		postOrders();
+		postCustomers();
 	},[]);
 
 	return (
 		<PageHeader className="site-page-header" style={style.border}
 	    	onBack={() => null}
-	    	title="Add product">
+	    	title="Add customer">
 		<Form style={style.border}
 			name="basic"
 			labelCol={{
@@ -46,12 +46,12 @@ export const OrdersAdd = () => {
 			onFinishFailed={onFinishFailed}
 		>
 			<Form.Item style={style.input}
-				label="order_number"
-				name="order_number"
+				label="first_name"
+				name="first_name"
 				rules={[
 			  	{
 					required: true,
-					message: 'Please input order number!',
+					message: 'Please input first name!',
 				},
 				]}
 		 	>
@@ -59,12 +59,12 @@ export const OrdersAdd = () => {
 			</Form.Item>
 		
 			<Form.Item
-				label="customer"
-				name="customer"
+				label="last_name"
+				name="last_name"
 				rules={[
 					{
 						required: true,
-						message: 'Please input customer!',
+						message: 'Please input last name!',
 					},
 				]}
 			>
@@ -72,12 +72,12 @@ export const OrdersAdd = () => {
 			</Form.Item>
 
 			<Form.Item
-		        name="products"
-		        label="products"
+		        name="email"
+		        label="email"
 		        rules={[
 					{
 						required: true,
-						message: 'Please input products!',
+						message: 'Please input email!',
 					},
 				  ]}
 		    >
@@ -85,12 +85,12 @@ export const OrdersAdd = () => {
 		    </Form.Item>
 
 			<Form.Item
-				label="quantity"
-				name="quantity"
+				label="phone_number"
+				name="phone_number"
 				rules={[
 					{
 						required: true,
-						message: 'Please input quantity!',
+						message: 'Please input phone number!',
 					},
 				]}
 			>
@@ -98,12 +98,38 @@ export const OrdersAdd = () => {
 			</Form.Item>
 
 			<Form.Item
-				label="amount"
-				name="amount"
+				label="city"
+				name="city"
 				rules={[
 					{
 						required: true,
-						message: 'Please input amount!',
+						message: 'Please input city!',
+					},
+				]}
+			>
+				<Input />
+			</Form.Item>
+
+			<Form.Item
+				label="address"
+				name="address"
+				rules={[
+					{
+						required: true,
+						message: 'Please input address!',
+					},
+				]}
+			>
+				<Input />
+			</Form.Item>
+
+			<Form.Item
+				label="zip_code"
+				name="zip_code"
+				rules={[
+					{
+						required: true,
+						message: 'Please input zip code!',
 					},
 				]}
 			>
