@@ -1,7 +1,5 @@
-import './App.css';
 import { BrowserRouter, Switch, Route, Link, } from "react-router-dom";
 import { Button, PageHeader} from 'antd';
-import classes from './App.css';
 import { ProductList} from './components/products';
 import { ProductsAdd } from './components/products/add';
 import { ProductsEdit } from './components/products/edit';
@@ -15,12 +13,20 @@ import { SellerList } from './components/sellers';
 import { SellersAdd } from './components/sellers/add';
 import { SellersEdit } from './components/sellers/edit';
 import { SellerView } from './components/sellers/view';
+import { AuthSignin } from './components/auth/signin';
+
 function App() {
   return (
     <div className="App">
      <BrowserRouter>
       <div>
         <Switch>
+        <Route exact path="/auth/signin">
+            <AuthSignin/>
+          </Route>
+          <Route exact path="/sellers">
+            <SellerList/>
+          </Route>
           <Route exact path="/sellers">
             <SellerList/>
           </Route>
