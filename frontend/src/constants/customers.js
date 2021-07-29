@@ -51,3 +51,46 @@ export const listColumns = [
 		sorter: (a, b) => {return a.zip_code.localeCompare(b.zip_code)},
 	},
 ];
+
+export const FormItems = [
+	{
+		label: "first_name",
+		name: "first_name",
+		errorMessage: "Please input first name!",
+	},
+	{
+		label: "last_name",
+		name: "last_name",
+		errorMessage: 'Please input last name!',
+	},
+	{
+		label: "last_name",
+		name: "last_name",
+		errorMessage: 'Please input last name!',
+	},
+	{
+		label: "email",
+		name: "email",
+		errorMessage: 'Please input email!',
+	},
+	{
+		label: "phone_number",
+		name: "phone_number",
+		errorMessage: 'Please input phone number!',
+	},
+	{
+		label: "city",
+		name: "city",
+		errorMessage: 'Please input city!',
+	},
+	{
+		label: "address",
+		name: "address",
+		errorMessage: 'Please input address!',
+	},
+	{
+		label: "zip_code",
+		name: "zip_code",
+		errorMessage: 'Please input zipcode!',
+	}
+];

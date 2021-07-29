@@ -32,11 +32,6 @@ export const listColumns = [
 		key: 'phone_number',
 	},
 	{
-		title: 'password',
-		dataIndex: 'password',
-		key: 'password',
-	},
-	{
 		title: 'email',
 		dataIndex: 'email',
 		key: 'email',

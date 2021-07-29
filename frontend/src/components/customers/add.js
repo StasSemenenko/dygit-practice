@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Table, PageHeader, Form, Input, Button, Upload, message} from 'antd';
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import http from '../../services/http';
+import { FormItems } from '../../constants/customers';
 
 const style = {
 	input: {marginTop: 10},
@@ -24,10 +25,6 @@ export const CustomersAdd = () => {
 			message.error(msg);
 		}
 	};
-  
-	const onFinishFailed = (errorInfo) => {
-		console.log('Failed:', errorInfo);
-	};
 
 	return (
 		<PageHeader className="site-page-header" style={style.border}
@@ -48,96 +45,15 @@ export const CustomersAdd = () => {
 				onFinishFailed={onFinishFailed}
 			>
 				
-				<Form.Item style={style.input}
-					label="first_name"
-					name="first_name"
-					// rules={[
-				  	// {
-					// 	required: true,
-					// 	message: 'Please input first name!',
-					// },
-					// ]}
-			 	>
-					<Input />
-				</Form.Item>
-			
-				<Form.Item
-					label="last_name"
-					name="last_name"
-					rules={[
-						{
-							required: true,
-							message: 'Please input last name!',
-						},
-					]}
-				>
-					<Input />
-				</Form.Item>
-
-				<Form.Item
-			        name="email"
-			        label="email"
-			        rules={[
-						{
-							required: true,
-							message: 'Please input email!',
-						},
-					  ]}
-			    >
-					<Input />
-			    </Form.Item>
-
-				<Form.Item
-					label="phone_number"
-					name="phone_number"
-					rules={[
-						{
-							required: true,
-							message: 'Please input phone number!',
-						},
-					]}
-				>
-					<Input />
-				</Form.Item>
-
-				<Form.Item
-					label="city"
-					name="city"
-					rules={[
-						{
-							required: true,
-							message: 'Please input city!',
-						},
-					]}
-				>
-					<Input />
-				</Form.Item>
-
-				<Form.Item
-					label="address"
-					name="address"
-					rules={[
-						{
-							required: true,
-							message: 'Please input address!',
-						},
-					]}
-				>
-					<Input />
-				</Form.Item>
-
-				<Form.Item
-					label="zip_code"
-					name="zip_code"
-					rules={[
-						{
-							required: true,
-							message: 'Please input zip code!',
-						},
-					]}
-				>
-					<Input />
-				</Form.Item>
+				{FormItems.map((item, index) => (
+					<Form.Item
+					key={index}
+					label={item.label}
+					name={item.name}
+					rules={ [{ required: true, message: item.errorMessage }] }>
+						<Input />
+					</Form.Item>
+				))}
 				 
 				<Form.Item
 					wrapperCol={{

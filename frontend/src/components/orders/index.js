@@ -15,14 +15,13 @@ export const OrdertList = () => {
 		// const r = await http.post('/auth/signin', {  email: 'stanislavsemenenko@gmail.com', password: '123465' });
 		const res = await http.get('/orders');
 		const updateOrders = res.data.orders.map(o => {
-			let products = '';
-			o.products.forEach(p => {
-				products += `${p.product} x${p.quantity}\n`;
-			});
-			o.products = products;
+			o.products = o.products.reduce((accum, value) => {
+				return accum + `${value.product.title} x${value.quantity}\n`
+			},'')
+
+			// console.log(t)
 			return o;
 		});
-		console.log(updateOrders)
 		setOrders(updateOrders);
 	};
 	

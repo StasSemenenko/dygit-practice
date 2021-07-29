@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const Orders = require('../models/order');
+const Order = require('../models/order');
 
 module.exports = {
 	async getAllOrders(req, res) {
-		const orders = await Orders.find({ seller: req.user }).lean();
+		const orders = await Order.find({ seller: req.user }).populate('customer').populate('products.product').lean();
 		res.send({ orders });
 	},
 
@@ -12,7 +12,11 @@ module.exports = {
 		if (!id || !mongoose.Types.ObjectId.isValid(id)) {
 			return res.status(422).send({ error: 'Bad order id' });
 		}
-		const order = await Orders.findOne({ _id: id }).populate('seller').populate('customer').lean();
+		const order = await Order.findOne({ _id: id })
+			.populate('seller')
+			.populate('customer')
+			.populate('products.product')
+			.lean();
 		return res.send({ order });
 	},
 
@@ -26,7 +30,7 @@ module.exports = {
 			amount,
 		} = req.body;
 		try {
-			await Orders.create({
+			await Order.create({
 				order_number,
 				seller: req.user,
 				customer,
@@ -44,7 +48,7 @@ module.exports = {
 	async editOrder(req, res) {
 		const { id } = req.params;
 		try {
-			await Orders.updateOne({ _id: id }, req.body);
+			await Order.updateOne({ _id: id }, req.body);
 			res.send({ message: 'success' });
 		} catch (e) {
 			res.status(500).send({ error: 'Order edit error' });
@@ -54,7 +58,7 @@ module.exports = {
 	async deleteOrder(req, res) {
 		const { id } = req.params;
 		try {
-			await Orders.deleteOne({ _id: id });
+			await Order.deleteOne({ _id: id });
 			res.send({ message: 'success' });
 		} catch (e) {
 			res.status(500).send({ error: 'Order delete error' });

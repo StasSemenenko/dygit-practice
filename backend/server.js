@@ -17,6 +17,9 @@ app.use(session({
 	secret: config.session_key,
 	resave: true,
 	saveUninitialized: false,
+	cookie: {
+		httpOnly: false,
+	},
 }));
 app.use(helmet());
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));

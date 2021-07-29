@@ -98,8 +98,8 @@ export const ProductsAdd = () => {
 		
 			<Form.Item
 				wrapperCol={{
-				offset: 8,
-				span: 8,
+				offset: 11	,
+				span: 16,
 				}}
 			>
 				<Button

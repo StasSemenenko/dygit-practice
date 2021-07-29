@@ -18,6 +18,7 @@ export const listColumns = [
 		title: 'customer',
 		dataIndex: 'customer',
 		key: 'customer',
+		render: (customer, row) => <Link to={'/customer/'+customer._id}>{customer.first_name}</Link>,
 		sorter: (a, b) => {return a.customer.localeCompare(b.customer)},
 	},
 	{

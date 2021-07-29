@@ -31,12 +31,9 @@ export const ProductList = () => {
 	return (
 		<>
 		<PageHeader
-	    	className="site-page-header" style={style.border}
-	    	onBack={() => null}
-	    	title="Title"
-	    	// subTitle="This is a subtitle"
+	    	className="site-page-header"  	
+	    	title="Products"
   		>,
-			<h1>Products</h1>
 			<Table xs ={24} md={{span: 12, offset: 6}} columns={listColumns} dataSource={products} rowKey='_id'/>
 		</PageHeader>
 		</>
