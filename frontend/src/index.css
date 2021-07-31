@@ -12,3 +12,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.ant-layout-header {
+  margin-bottom: 20px;
+}
+
+.site-page-header {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid black;
+  width: 60%;
+  margin: auto;
+  background-color: white;
+}
+
+.site-page-header.s{
+	display: flex;
+	justify-content: space-between;
+	border: 1px solid black;
+	width: 100%;
+	margin: auto;
+	background-color: white;
+}
+
+.ant-form {
+  border: 1px solid black;
+  width: 60%;
+  margin: auto;
+  padding: 20px 0 5px 0;
+  background-color: white;
+}
+
+.ant-table-wrapper {
+  border: 1px solid black;
+}

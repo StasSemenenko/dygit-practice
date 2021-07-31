@@ -6,7 +6,7 @@ export const listColumns = [
 		title: '_id',
 		dataIndex: '_id',
 		key: '_id',
-		render: (text, record) => <Link to={'/products/view/'+record._id}>{text}</Link>,
+		render: (text, record) => <Link to={'/products/'+record._id}>{text}</Link>,
 		sorter: (a, b) => {return a.title.localeCompare(b.title)},
 	},
 	{	
@@ -40,5 +40,28 @@ export const listColumns = [
 		render: record => <Link to={'/sellers/view/'+record._id}> {record.first_name + ' ' + record.last_name} </Link>,
 		// render: (text, record) => <Link to={'/seller/view/'+record._id}>{text}</Link>,
 		sorter: (a, b) => {return a.seller.localeCompare(b.seller)},
+	},
+];
+
+export const FormItems = [
+	{
+		label: "Title",
+		name: "title",
+		errorMessage: "Please input title!",
+	},
+	{
+		label: "Description",
+		name: "description",
+		errorMessage: 'Please input description!',
+	},
+	{
+		label: "Image",
+		name: "image",
+		errorMessage: 'Please input image!',
+	},
+	{
+		label: "Price",
+		name: "price",
+		errorMessage: 'Please input price!',
 	},
 ];

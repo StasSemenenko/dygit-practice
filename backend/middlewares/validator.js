@@ -29,6 +29,19 @@ module.exports.createUser = (req, res, next) => {
 	validate(req, res, next, schema);
 };
 
+module.exports.editSeller = (req, res, next) => {
+	const schema = Joi.object({
+		first_name: Joi.string(),
+		last_name: Joi.string(),
+		shop_name: Joi.string(),
+		phone_number: Joi.number(),
+		email: Joi.string().email(),
+		password: Joi.string().min(6),
+		logo: Joi.string(),
+	});
+	validate(req, res, next, schema);
+};
+
 module.exports.createProduct = (req, res, next) => {
 	const schema = Joi.object({
 		title: Joi.string().required(),
@@ -67,7 +80,7 @@ module.exports.editCustomer = (req, res, next) => {
 	const schema = Joi.object({
 		first_name: Joi.string(),
 		last_name: Joi.string(),
-		phone_number: Joi.number().required(),
+		phone_number: Joi.number(),
 		email: Joi.string().email(),
 		city: Joi.string(),
 		address: Joi.string(),
@@ -78,7 +91,7 @@ module.exports.editCustomer = (req, res, next) => {
 
 module.exports.createOrder = (req, res, next) => {
 	const schema = Joi.object({
-		order_number: Joi.string().required(),
+		order_number: Joi.number(),
 		customer: Joi.objectId().required(),
 		products: Joi.array().items(Joi.object({
 			product: Joi.objectId().required(),

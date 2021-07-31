@@ -1,14 +1,9 @@
-import { listColumns } from '../../constants/customers';
-import http from '../../services/http';
-import { Table, PageHeader, Form, Input, Button, Upload,} from 'antd';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Table, PageHeader, Form, Input, Button, Upload,} from 'antd';
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
-
-const style = {
-	input: {marginTop: 10},
-	border: {border: '1px solid grey'},
-	button: {}
-}
+import http from '../../services/http';
+import { listColumns } from '../../constants/customers';
 
 export const CustomersList = () => {
 	const [customers, setCustomers] = useState([]);
@@ -30,15 +25,14 @@ export const CustomersList = () => {
 	//   };
 	return (
 		<>
-			<PageHeader
-		    	className="site-page-header" style={style.border}
-		    	onBack={() => null}
-		    	title="Title"
+			<PageHeader 
+		    	className="site-page-header s" 
+		    	title="Customers"
 		    	// subTitle="This is a subtitle"
 	  		>
-				<h1>Sellers</h1>
-				<Table xs ={24} md={{span: 12, offset: 6}} columns={listColumns} dataSource={customers} rowKey='_id'/>
+				<button><Link to='/customers/add'>Add customer</Link></button>
 			</PageHeader>
+				<Table xs ={24} md={{span: 12, offset: 6}} columns={listColumns} dataSource={customers} rowKey='_id'/>
 		</>
 	)
 };

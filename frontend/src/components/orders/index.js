@@ -1,7 +1,8 @@
-import { listColumns } from '../../constants/order';
-import http from '../../services/http';
-import { Table, PageHeader, Form, Input, Button, Upload,} from 'antd';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Table, PageHeader, Form, Input, Button, Upload,} from 'antd';
+import http from '../../services/http';
+import { listColumns } from '../../constants/orders';
 
 const style = {
 	input: {marginTop: 10},
@@ -9,7 +10,7 @@ const style = {
 	button: {}
 }
 
-export const OrdertList = () => {
+export const OrdersList = () => {
 	const [orders, setOrders] = useState([]);
 	const getOrders = async () => {
 		// const r = await http.post('/auth/signin', {  email: 'stanislavsemenenko@gmail.com', password: '123465' });
@@ -29,24 +30,16 @@ export const OrdertList = () => {
 		getOrders();
 	},[]);
 
-	// const normFile = (e: any) => {
-	// 	console.log('Upload event:', e);
-	// 	if (Array.isArray(e)) {
-	// 	  return e;
-	// 	}
-	// 	return e && e.fileList;
-	//   };
 	return (
 		<>
 			<PageHeader
-	    	className="site-page-header" style={style.border}
-	    	onBack={() => null}
-	    	title="Title"
+	    	className="site-page-header s" style={style.border}
+	    	title="Orders"
 	    	// subTitle="This is a subtitle"
-	  		>,
-				<h1>Orders</h1>
-				<Table xs ={24} md={{span: 12, offset: 6}} columns={listColumns} dataSource={orders} rowKey='_id'/>
+	  		>
+				<button><Link to='/orders/add'>Add order</Link></button>
 			</PageHeader>
+				<Table xs ={24} md={{span: 12, offset: 6}} columns={listColumns} dataSource={orders} rowKey='_id'/>
 		</>
 	)
 };

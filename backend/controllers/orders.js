@@ -29,9 +29,15 @@ module.exports = {
 			quantity,
 			amount,
 		} = req.body;
+		console.log(order_number,
+			customer,
+			products,
+			status,
+			quantity,
+			amount);
 		try {
 			await Order.create({
-				order_number,
+				order_number: 1,
 				seller: req.user,
 				customer,
 				products,
@@ -41,6 +47,7 @@ module.exports = {
 			});
 			res.send({ message: 'success' });
 		} catch (e) {
+			console.log(e);
 			res.status(500).send({ error: 'Order create error' });
 		}
 	},

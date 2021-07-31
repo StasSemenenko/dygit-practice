@@ -5,7 +5,7 @@ export const listColumns = [
 		title: '_id',
 		dataIndex: '_id',
 		key: '_id',
-		render: (text, record) => <Link to={'/customer/view/'+record._id}>{text}</Link>,
+		render: (text, record) => <Link to={'/customers/'+record._id}>{text}</Link>,
 		sorter: (a, b) => {return a._id.localeCompare(b._id)},
 	},
 	{
@@ -54,42 +54,37 @@ export const listColumns = [
 
 export const FormItems = [
 	{
-		label: "first_name",
+		label: "First name",
 		name: "first_name",
 		errorMessage: "Please input first name!",
 	},
 	{
-		label: "last_name",
+		label: "Last name",
 		name: "last_name",
 		errorMessage: 'Please input last name!',
 	},
 	{
-		label: "last_name",
-		name: "last_name",
-		errorMessage: 'Please input last name!',
-	},
-	{
-		label: "email",
+		label: "Email",
 		name: "email",
 		errorMessage: 'Please input email!',
 	},
 	{
-		label: "phone_number",
+		label: "Phone number",
 		name: "phone_number",
 		errorMessage: 'Please input phone number!',
 	},
 	{
-		label: "city",
+		label: "City",
 		name: "city",
 		errorMessage: 'Please input city!',
 	},
 	{
-		label: "address",
+		label: "Address",
 		name: "address",
 		errorMessage: 'Please input address!',
 	},
 	{
-		label: "zip_code",
+		label: "Zip code",
 		name: "zip_code",
 		errorMessage: 'Please input zipcode!',
 	}

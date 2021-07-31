@@ -5,13 +5,7 @@ import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import http from '../../services/http';
 import { FormItems } from '../../constants/customers';
 
-const style = {
-	input: {marginTop: 10},
-	border: {border: '1px solid grey'},
-	button: {}
-}
-
-export const CustomersAdd = () => {
+export const CustomerAdd = () => {
 	const history = useHistory();
 
 	const onFinish = async (values) => {
@@ -27,10 +21,11 @@ export const CustomersAdd = () => {
 	};
 
 	return (
-		<PageHeader className="site-page-header" style={style.border}
-	    	onBack={() => null}
-	    	title="Add customer">
-			<Form style={style.border}
+		<>
+			<PageHeader className="site-page-header" 
+		    	title="Add customer">
+			</PageHeader>
+			<Form 
 				name="basic"
 				labelCol={{
 					span: 8,
@@ -42,7 +37,6 @@ export const CustomersAdd = () => {
 					remember: true,
 				}}
 				onFinish={onFinish}
-				onFinishFailed={onFinishFailed}
 			>
 				
 				{FormItems.map((item, index) => (
@@ -67,6 +61,6 @@ export const CustomersAdd = () => {
 					</Button>
 				</Form.Item>
 			</Form>
-		</PageHeader>
+		</>
 	);
 }

@@ -39,6 +39,7 @@ module.exports = {
 	},
 	signOut(req, res) {
 		req.session.destroy(() => {
+			res.clearCookie('connect.sid', { path: '/' });
 			res.send({ message: 'success' });
 		});
 	},

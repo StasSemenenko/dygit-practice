@@ -3,8 +3,9 @@ const Product = require('../models/product');
 
 module.exports = {
 	async getAllProducts(req, res) {
-		const products = await Product.find({ seller: req.user }).populate('seller').lean();
-		res.send({ products });
+		const page = req.query.page || 1;
+		const data = await Product.paginate({ seller: req.user }, { page, limit: 10, populate: 'seller' });
+		res.send({ products: data.docs, pages: data.totalPages, total: data.totalDocs });
 	},
 
 	async getOneProduct(req, res) {
@@ -12,7 +13,7 @@ module.exports = {
 		if (!id || !mongoose.Types.ObjectId.isValid(id)) {
 			return res.status(422).send({ error: 'Bad product id' });
 		}
-		const product = await Product.findOne({ _id: id }).lean();
+		const product = await Product.findOne({ _id: id }).populate('seller').lean();
 		return res.send({ product });
 	},
 	async createProduct(req, res) {

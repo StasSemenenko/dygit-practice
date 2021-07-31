@@ -1,16 +1,12 @@
-import { listColumns } from '../../constants/sellers';
-import http from '../../services/http';
-import { Table, PageHeader, Form, Input, Button, Upload,} from 'antd';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Table, PageHeader, Form, Input, Button, Upload,} from 'antd';
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
+import http from '../../services/http';
+import { listColumns } from '../../constants/sellers';
 
-const style = {
-	input: {marginTop: 10},
-	border: {border: '1px solid grey'},
-	button: {}
-}
 
-export const SellerList = () => {
+export const SellersList = () => {
 	const [sellers, setSellers] = useState([]);
 	const getSellers = async () => {
 		// const res = await Axios.post('/auth/signin', {  email: 'stanislavsemenenko@gmail.com', password: '123465' });
@@ -31,14 +27,13 @@ export const SellerList = () => {
 	return (
 		<>
 			<PageHeader
-		    	className="site-page-header" style={style.border}
-		    	onBack={() => null}
-		    	title="Title"
+		    	className="site-page-header s" 
+		    	title="Sellers"
 		    	// subTitle="This is a subtitle"
 	  		>
-				<h1>Sellers</h1>
-				<Table xs ={24} md={{span: 12, offset: 6}} columns={listColumns} dataSource={sellers} rowKey='_id'/>
+				<button><Link to='/sellers/add'>Add seller</Link></button>
 			</PageHeader>
+				<Table xs ={24} md={{span: 12, offset: 6}} columns={listColumns} dataSource={sellers} rowKey='_id'/>
 		</>
 	)
 };

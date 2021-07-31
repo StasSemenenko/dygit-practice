@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react';
 import http from '../../services/http';
-import { useParams } from 'react-router-dom';
+import { useParams, Link, useHistory} from 'react-router-dom';
 import { Card, Avatar } from 'antd';
 import { EditOutlined, EllipsisOutlined, SettingOutlined, DeleteOutlined } from '@ant-design/icons';
 
-const { Meta } = Card;
-
 export const OrderView = () => {
 	const {id} = useParams();
+	const history = useHistory();
+	const onDelete = async () => {
+		await http.delete('/orders/'+ id);
+		history.push('/orders');
+	}
 	const [order, setOrder] = useState();
 	const getOrder = async () => {
 		const res = await http.get('/orders/'+ id );
@@ -25,7 +28,7 @@ export const OrderView = () => {
 		<>
 		{order && 
 			<div style={{color: "red"}}>
-				<Card title={order.order_number} style={{ width: 300 }}>
+				<Card title='Order' style={{ width: 300, margin: 'auto'}}>
 					<p>{order._id}</p>
 					<p>{order.customer.first_name}</p>
 					<p>{order.products}</p>
@@ -33,8 +36,8 @@ export const OrderView = () => {
 					<p>{order.quantity}</p>
 					<p>{order.amount}</p>
 					<p>
-						<button><EditOutlined /></button>
-						<button><DeleteOutlined /></button>
+					<button><Link to={`/orders/${id}/edit`}><EditOutlined /></Link></button>
+					<button onClick={onDelete}><DeleteOutlined /></button>
 					</p>
 				</Card>
 			</div>

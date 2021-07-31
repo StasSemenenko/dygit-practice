@@ -15,6 +15,15 @@ module.exports = {
 		const seller = await Seller.findOne({ _id: id }).lean();
 		return res.send({ seller });
 	},
+	async editSeller(req, res) {
+		const { id } = req.params;
+		try {
+			await Seller.updateOne({ _id: id }, req.body);
+			res.send({ message: 'success' });
+		} catch (e) {
+			res.status(500).send({ error: 'Seller edit error' });
+		}
+	},
 	async deleteSeller(req, res) {
 		const { id } = req.params;
 		try {

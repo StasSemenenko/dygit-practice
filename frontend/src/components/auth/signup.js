@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, message, PageHeader} from 'antd';
-import  './auth.css';
 import http from '../../services/http';
 
 

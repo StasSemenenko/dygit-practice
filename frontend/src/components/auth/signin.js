@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Form, Input, Button, Checkbox, PageHeader, message } from 'antd';
 import { useHistory } from 'react-router-dom';
-import  './auth.css';
 import http from '../../services/http';
 
 
@@ -12,7 +11,8 @@ export const AuthSignin = () => {
         console.log('Success:', values);
         try {
             const res = await http.post('auth/signin', values);
-            history.push('/');
+            document.location.pathname = '/';
+
         }
         catch(e) {
             const msg = `${e.response.data.error}`;

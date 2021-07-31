@@ -1,112 +1,88 @@
-import http from '../../services/http';
-import { Table, PageHeader, Form, Input, Button, Upload,} from 'antd';
 import { useEffect, useState } from 'react';
+import { useHistory, useParams} from 'react-router-dom';
+import { Table, PageHeader, Form, Input, Button, Upload,} from 'antd';
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
+import http from '../../services/http';
+import { FormItems } from '../../constants/orders';
 
-const style = {
-	input: {marginTop: 10},
-	border: {border: '1px solid grey'},
-	button: {}
-}
+export const OrderEdit = () => {
+	const history = useHistory();
+	const {id} = useParams();
+	const [form] = Form.useForm();
 
-export const ProductsEdit = () => {
-	const onFinish = (values) => {
+	const onFinish = async (values) => {
 		console.log('Success:', values);
-	};
-  
-	const onFinishFailed = (errorInfo) => {
-		console.log('Failed:', errorInfo);
+		try {
+			const res = await http.put(`/orders/${id}`, values);
+			history.push('/orders');
+		}
+		catch(e) {
+			const msg = `${e.response.data.error}`;
+            if(e.response.data.errors) {
+                msg += `${e.response.data.errors.join(', ')}`;
+            }
+            message.error(msg);
+		}
 	};
 
-	const [products, setProducts] = useState([]);
-	const getProducts = async () => {
-		const res = await http.get('/products');
-		setProducts(res.data.products);
+	const [order, setOrder] = useState([]);
+	const getOrder = async () => {
+		const res = await http.get(`/orders/${id}`);
+		setOrder(res.data.order);
 	}
 	useEffect(() => {
-		getProducts();
+		getOrder();
 	},[]);
+	useEffect(() => {
+		form.setFieldsValue({
+			customer: order.customer,
+			products: order.products,
+			quantity: order.quantity,
+			status: order.pricstatuse,
+			amount: order.amount,
+		})
+	},[order])
 
 	return (
-		<PageHeader className="site-page-header" style={style.border}
-    		onBack={() => null}
-    		title="Edit product">
-		<Form style={style.border}
-			name="basic"
-			labelCol={{
-				span: 8,
-			}}
-		  	wrapperCol={{
-				span: 8,
-			}}
-			initialValues={{
-				remember: true,
-			}}
-		  	onFinish={onFinish}
-		  	onFinishFailed={onFinishFailed}
-		>
-			<Form.Item style={style.input}
-				label="Name"
-				name="name"
-				rules={[
-					{
-						required: true,
-						message: 'Please input product name!',
-					},
-				]}
-			>
-				<Input />
-			</Form.Item>
-	
-			<Form.Item
-				label="Description"
-				name="description"
-				rules={[
-					{
-						required: true,
-						message: 'Please input description!',
-					},
-				]}
-			>
-				<Input />
-			</Form.Item>
-
-			<Form.Item
-		        name="upload"
-		        label="Upload"
-		        valuePropName="fileList"
-	        	// getValueFromEvent={normFile}
-	    	>
-	        	<Upload name="logo" action="/upload.do" listType="picture">
-	        		<Button icon={<UploadOutlined />}>Click to upload</Button>
-	        	</Upload>
-	    	</Form.Item>
-
-			<Form.Item
-				label="Price"
-				name="price"
-				rules={[
-					{
-						required: true,
-						message: 'Please input price!',
-					},
-				]}
-			>
-				<Input />
-		  	</Form.Item>
-		
-			<Form.Item
-				wrapperCol={{
-					offset: 8,
+		<>
+			<PageHeader className="site-page-header" 
+	     		title="Edit order">
+			</PageHeader>
+			<Form 
+				name="basic"
+				labelCol={{
 					span: 8,
 				}}
+			  	wrapperCol={{
+					span: 8,
+				}}
+				initialValues={{
+					remember: true,
+				}}
+			  	onFinish={onFinish}
 			>
-				<Button
-					type="primary" htmlType="submit">
-			  		Submit
-				</Button>
-		 	</Form.Item>
-		</Form>
-		</PageHeader>
+				{FormItems.map((item, index) => (
+					<Form.Item
+						key={index}
+						label={item.label}
+						name={item.name}
+						rules={ [{ required: true, message: item.errorMessage }] }>
+						<Input />
+					</Form.Item>
+					))}
+			
+				<Form.Item
+					wrapperCol={{
+						offset: 8,
+						span: 8,
+					}}
+				>
+					<Button
+						type="primary" htmlType="submit">
+				  		Submit
+					</Button>
+			 	</Form.Item>
+			</Form>
+		</>
 	  );
 }

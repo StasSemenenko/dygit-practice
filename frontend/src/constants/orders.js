@@ -6,7 +6,7 @@ export const listColumns = [
 		title: '_id',
 	    dataIndex: '_id',
 	    key: '_id',
-		render: (text, record) => <Link to={'/orders/view/'+record._id}>{text}</Link>,
+		render: (text, record) => <Link to={'/orders/'+record._id}>{text}</Link>,
 		sorter: (a, b) => {return a._id.localeCompare(b._id)},
 	},
 	{
@@ -41,4 +41,31 @@ export const listColumns = [
 		sorter: (a, b) => a.amount - b.amount,
 	},
 ]; 
-// Link
+
+export const FormItems = [
+	{
+		label: "customer",
+		name: "customer",
+		errorMessage: "Please input customer!",
+	},
+	{
+		label: "products",
+		name: "products",
+		errorMessage: 'Please input products!',
+	},
+	{
+		label: "quantity",
+		name: "quantity",
+		errorMessage: 'Please input quantity!',
+	},
+	{
+		label: "status",
+		name: "status",
+		errorMessage: 'Please input status!',
+	},
+	{
+		label: "amount",
+		name: "amount",
+		errorMessage: 'Please input amount!',
+	},
+];

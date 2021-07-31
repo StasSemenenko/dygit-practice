@@ -1,127 +1,113 @@
-import http from '../../services/http';
-import { Table, PageHeader, Form, Input, Button, Upload,} from 'antd';
 import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Table, PageHeader, Form, Input, Button, Upload, message, Select } from 'antd';
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
+import http from '../../services/http';
+import { FormItems } from '../../constants/orders';
 
-const style = {
-	input: {marginTop: 10},
-	border: {border: '1px solid grey'},
-	button: {}
-}
+export const OrderAdd = () => {
+	const history = useHistory();
 
-export const OrdersAdd = () => {
-	const onFinish = (values) => {
+	const onFinish = async (values) => {
 		console.log('Success:', values);
+		try {
+			const res = await http.post('/orders', values);
+			history.push('/orders');
+		}
+		catch(e) {
+			// const msg = `${e.response.data.error}: ${e.response.data.errors.join(', ')}`;
+			// message.error(msg);
+		}
 	};
-  
-	const onFinishFailed = (errorInfo) => {
-		console.log('Failed:', errorInfo);
-	};
+	const [products, setProducts] = useState([]);
 
-	const [orders, setOrders] = useState([]);
-	const postOrders = async () => {
-		const res = await http.post('/orders');
-		setOrders(res.data.orders);
+	const getProducts = async () => {
+		const prod = await http.get('/products');
+		console.log(prod.data.products[0].title)
+		setProducts(prod.data.products);
 	}
+
 	useEffect(() => {
-		postOrders();
+		getProducts();
 	},[]);
+	
+	
+	const { Option } = Select;
 
+	function onChange(value) {
+	  console.log(`selected ${value}`);
+	}
+
+	function onBlur() {
+	  console.log('blur');
+	}
+
+	function onFocus() {
+	  console.log('focus');
+	}
+
+	function onSearch(val) {
+	  console.log('search:', val);
+	}
+  
 	return (
-		<PageHeader className="site-page-header" style={style.border}
-	    	onBack={() => null}
-	    	title="Add product">
-		<Form style={style.border}
-			name="basic"
-			labelCol={{
-				span: 8,
-			}}
-			wrapperCol={{
-				span: 8,
-			}}
-			initialValues={{
-				remember: true,
-			}}
-			onFinish={onFinish}
-			onFinishFailed={onFinishFailed}
-		>
-			<Form.Item style={style.input}
-				label="order_number"
-				name="order_number"
-				rules={[
-			  	{
-					required: true,
-					message: 'Please input order number!',
-				},
-				]}
-		 	>
-				<Input />
-			</Form.Item>
-		
-			<Form.Item
-				label="customer"
-				name="customer"
-				rules={[
-					{
-						required: true,
-						message: 'Please input customer!',
-					},
-				]}
-			>
-				<Input />
-			</Form.Item>
-
-			<Form.Item
-		        name="products"
-		        label="products"
-		        rules={[
-					{
-						required: true,
-						message: 'Please input products!',
-					},
-				  ]}
-		    >
-				<Input />
-		    </Form.Item>
-
-			<Form.Item
-				label="quantity"
-				name="quantity"
-				rules={[
-					{
-						required: true,
-						message: 'Please input quantity!',
-					},
-				]}
-			>
-				<Input />
-			</Form.Item>
-
-			<Form.Item
-				label="amount"
-				name="amount"
-				rules={[
-					{
-						required: true,
-						message: 'Please input amount!',
-					},
-				]}
-			>
-				<Input />
-			</Form.Item>
-			 
-			<Form.Item
-				wrapperCol={{
-				  offset: 8,
-				  span: 8,
+		<>
+			<PageHeader className="site-page-header" 
+		    	title="Add order">
+			</PageHeader>
+			<Form 
+				name="basic"
+				labelCol={{
+					span: 8,
 				}}
+				wrapperCol={{
+					span: 8,
+				}}
+				initialValues={{
+					remember: true,
+				}}
+				onFinish={onFinish}
 			>
-				<Button
-					type="primary" htmlType="submit">
-				 	Submit
-				</Button>
-			</Form.Item>
+
+				{FormItems.map((item, index) => (
+					<Form.Item
+					key={index}
+					label={item.label}
+					name={item.name}
+					rules={ [{ required: true, message: item.errorMessage }] }>
+						<Input />
+					</Form.Item>
+				))}	
+
+				<Select
+				    showSearch
+				    style={{ width: 200 }}
+				    placeholder="Select a product"
+				    optionFilterProp="children"
+				    onChange={onChange}
+				    onFocus={onFocus}
+				    onBlur={onBlur}
+				    onSearch={onSearch}
+				    filterOption={(input, option) =>
+				      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+				    }
+				>
+				    {/* <Option value={prod.data.products[0].title}>{prod.data.products[0].title}</Option> */}
+
+				</Select>
+				
+				<Form.Item
+					wrapperCol={{
+					  offset: 8,
+					  span: 8,
+					}}
+				>
+					<Button
+						type="primary" htmlType="submit">
+					 	Submit
+					</Button>
+				</Form.Item>
 			</Form>
-		</PageHeader>
+		</>
 	);
 }
