@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const autoIncrement = require('mongoose-auto-increment');
 const config = require('config');
 
 module.exports.connect = () => {
@@ -11,4 +12,5 @@ module.exports.connect = () => {
 	}).catch(() => {
 		console.log('Mongodb error'.red);
 	});
+	autoIncrement.initialize(mongoose.connection);
 };

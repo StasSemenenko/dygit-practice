@@ -37,7 +37,7 @@ module.exports = {
 			amount);
 		try {
 			await Order.create({
-				order_number: 1,
+				order_number,
 				seller: req.user,
 				customer,
 				products,

@@ -6,6 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(240, 242, 244);
 }
 
 code {
@@ -45,4 +46,16 @@ code {
 
 .ant-table-wrapper {
   border: 1px solid black;
+}
+
+.ant-space{
+  margin-left: 215px;
+}
+
+.ant-input-group.ant-input-group-compact {
+  display: flex;
+}
+
+.ant-input {
+  /* margin-left: 90px; */
 }

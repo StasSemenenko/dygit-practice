@@ -24,41 +24,43 @@ export const AuthSignin = () => {
     };
 
     return (
-        <PageHeader
-	    	className="site-page-header" 
-	    	title="Login page"
-	    	// subTitle="This is a subtitle"
-  		>
-            <Form className='Form_signin'
-            name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 8 }}
-            initialValues={{ remember: true }}
-            onFinish={onFinish}
-            >
-            <Form.Item
-                label="Email"
-                name="email"
-                rules={[{ required: true, message: 'Please input your email!' }]}
-            >
-                <Input />
-            </Form.Item>
+        <>
+            <PageHeader
+    	    	className="site-page-header" 
+    	    	title="Login page"
+    	    	// subTitle="This is a subtitle"
+      		>
+            </PageHeader>
+                <Form className='Form_signin'
+                name="basic"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 8 }}
+                initialValues={{ remember: true }}
+                onFinish={onFinish}
+                >
+                <Form.Item
+                    label="Email"
+                    name="email"
+                    rules={[{ required: true, message: 'Please input your email!' }]}
+                >
+                    <Input />
+                </Form.Item>
 
-            <Form.Item
-                label="Password"
-                name="password"
-                rules={[{ required: true, message: 'Please input your password!' }]}
-            >
-                <Input.Password />
-            </Form.Item>
+                <Form.Item
+                    label="Password"
+                    name="password"
+                    rules={[{ required: true, message: 'Please input your password!' }]}
+                >
+                    <Input.Password />
+                </Form.Item>
 
 
-            <Form.Item wrapperCol={{ offset: 11, span: 16 }}>
-                <Button type="primary" htmlType="submit">
-                Submit
-                </Button>
-            </Form.Item>
+                <Form.Item wrapperCol={{ offset: 11, span: 16 }}>
+                    <Button type="primary" htmlType="submit">
+                    Submit
+                    </Button>
+                </Form.Item>
             </Form>
-        </PageHeader>
+        </>
     );
 };

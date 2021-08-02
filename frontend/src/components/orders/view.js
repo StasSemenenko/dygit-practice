@@ -13,7 +13,7 @@ export const OrderView = () => {
 	}
 	const [order, setOrder] = useState();
 	const getOrder = async () => {
-		const res = await http.get('/orders/'+ id );
+		const res = await http.get(`/orders/${id}`);
 		res.data.order.products = res.data.order.products.reduce((accum, value) => {
 			return accum + `${value.product.title} x${value.quantity}\n`
 		},'')

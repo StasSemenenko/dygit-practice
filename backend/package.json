@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "node server",
-    "dev": "nodemon server",
+    "dev": "nodemon server --ignore sessions",
     "lint": "eslint ./ --fix"
   }
 }

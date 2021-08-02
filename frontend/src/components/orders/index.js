@@ -4,11 +4,6 @@ import { Table, PageHeader, Form, Input, Button, Upload,} from 'antd';
 import http from '../../services/http';
 import { listColumns } from '../../constants/orders';
 
-const style = {
-	input: {marginTop: 10},
-	border: {border: '1px solid grey'},
-	button: {}
-}
 
 export const OrdersList = () => {
 	const [orders, setOrders] = useState([]);
@@ -33,7 +28,7 @@ export const OrdersList = () => {
 	return (
 		<>
 			<PageHeader
-	    	className="site-page-header s" style={style.border}
+	    	className="site-page-header s" 
 	    	title="Orders"
 	    	// subTitle="This is a subtitle"
 	  		>
