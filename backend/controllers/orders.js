@@ -3,8 +3,15 @@ const Order = require('../models/order');
 
 module.exports = {
 	async getAllOrders(req, res) {
-		const orders = await Order.find({ seller: req.user }).populate('customer').populate('products.product').lean();
-		res.send({ orders });
+		const page = req.query.page || 1;
+		const data = await Order.paginate({ seller: req.user }, {
+			page,
+			limit: 10,
+			populate: [
+				{ path: 'customer' },
+				{ path: 'products.product' }],
+		});
+		res.send({ orders: data.docs, pages: data.totalPages, total: data.totalDocs });
 	},
 
 	async getOneOrder(req, res) {
@@ -22,22 +29,21 @@ module.exports = {
 
 	async createOrder(req, res) {
 		const {
-			order_number,
 			customer,
 			products,
 			status,
 			quantity,
 			amount,
 		} = req.body;
-		console.log(order_number,
+		console.log(
 			customer,
 			products,
 			status,
 			quantity,
-			amount);
+			amount,
+		);
 		try {
 			await Order.create({
-				order_number,
 				seller: req.user,
 				customer,
 				products,

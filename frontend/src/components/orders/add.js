@@ -1,12 +1,18 @@
 import { useEffect, useState,} from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams} from 'react-router-dom';
 import { Table, PageHeader, Form, Input, Button, Upload, message, Select, Space } from 'antd';
 import { UploadOutlined, InboxOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import http from '../../services/http';
-import { OptionItem } from '../../components/Options/options';
+import { OrderStatusItems } from '../../components/Options/options';
 
 export const OrderAdd = () => {
 	const history = useHistory();
+	const {id} = useParams();
+	const [form] = Form.useForm();
+	const [products, setProducts] = useState([]);
+	const [order, setOrder] = useState({});
+	const [customers, setCustomers] = useState([]);
+	const [totalAmount, setTotalAmount] = useState(0);
 
 	const onFinish = async (values) => {
 		// console.log('Received values of form:', values);
@@ -21,50 +27,68 @@ export const OrderAdd = () => {
 			// message.error(msg);
 		}
 	};
-	const [products, setProducts] = useState([]);
-	const getProducts = async () => {
+
+	const getProducts = async() => {
 		const res = await http.get('/products');
 		// console.log(res.data.products);
 		setProducts(res.data.products);
+		// return res.data.products;
 	}
 
-	useEffect(() => {
-		getProducts();
-	},[]);
-
-	const [customers, setCustomers] = useState([]);
 	const getCustomers = async () => {
 		const res = await http.get('/customers');
 		// console.log(res.data.customers);
 		setCustomers(res.data.customers);
+		// return res.data.customers;
 	}
 
-	useEffect(() => {
-		getCustomers();
-	},[]);
+	const getOrder = async () => {
+		if (!id) return;
+		const res = await http.get(`/orders/${id}`);
+		res.data.order.products = res.data.order.products.map(item => {
+			return {
+				quantity: item.quantity,
+				product: item.product._id
+			}
+		})
+		setOrder(res.data.order);
+		form.setFieldsValue({
+			customer: res.data.order.customer?._id,
+			products: res.data.order.products,
+			status: res.data.order.status,
+			amount: res.data.order.amount,
+		});
+	}
+
+	useEffect(() => getProducts(), []);
+	useEffect(() =>	getCustomers(), [products]);
+	useEffect(() =>	getOrder(), [customers]);
+	useEffect(() =>	calcAmount(), [order]);
 	
 	
 	const { Option } = Select;
 
-	const [totalAmount, setTotalAmount] = useState(0);
-	function onFormChange(value, allValues) {
-		console.log(value, allValues);
-		const total = allValues?.products?.reduce((accum, item) => {
+
+	const calcAmount = () => {
+		if(!products.length) return
+		const values = form.getFieldsValue();
+		console.log(values);
+		const total = values?.products?.reduce((accum, item) => {
 			if(!item || !item.product) return accum;
-			console.log(item);
+			// console.log(item);
 			const { price } = products.find(p => p._id === item.product);
 			return accum += price * (item.quantity || 0);
 		}, 0);
 		setTotalAmount(total);
 	}
 
-
 	return (
-		<>		
+		<div className='formAddOrder'>		
 			<PageHeader className='site-page-header' 
 		    	title='Add order'>
 			</PageHeader>
 			<Form 
+				form={form}
 				name='basic'
 				labelCol={{
 					span: 8,
@@ -77,7 +101,7 @@ export const OrderAdd = () => {
 				}}
 				onFinish={onFinish}
 				autoComplete='off'
-				onValuesChange={onFormChange}
+				onValuesChange={calcAmount}
 			>
 				
 				  <Form.Item
@@ -124,7 +148,7 @@ export const OrderAdd = () => {
 					      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
 					    }
 					>
-						{OptionItem.map((item, index) => (
+						{OrderStatusItems.map((item, index) => (
 							<Option key={index}
 							value={item.value}>
 								{item.value}
@@ -133,43 +157,6 @@ export const OrderAdd = () => {
 						
 					</Select>
       			</Form.Item>
-
-				{/* <Form.Item  label="products">
-     			    <Input.Group  compact>
-       					<Form.Item 
-				            name={['address', 'province']}
-				            noStyle
-				            rules={[{ required: true, message: 'Province is required' }]}
-				        >
-				           <Select
-							    showSearch
-							    style={{ width: 300 }}
-							    placeholder='Select a product'
-							    optionFilterProp='children'
-							    onChange={onChange}
-							    // onFocus={onFocus}
-							    // onBlur={onBlur}
-							    // onSearch={onSearch}
-							    filterOption={(input, option) =>
-							      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-							    }
-							>
-
-							    {products.map(product => (
-									<Option key={product._id} value={product._id}>{product.title}</Option>
-								))}
-								
-							</Select>
-			        	</Form.Item>
-				        <Form.Item
-				            name={['product', 'quantity']}
-				            noStyle
-				            rules={[{ required: true, message: 'Street is required' }]}
-				        >
-				            <Input style={{ width: '50%' }} placeholder="Input quantity" />
-				        </Form.Item>
-		        	</Input.Group>
-		      </Form.Item> */}
 
 				{/*  */}
 				<Form.List name='products'>
@@ -187,10 +174,6 @@ export const OrderAdd = () => {
 							    style={{ width: 200 }}
 							    placeholder='Select a product'
 							    optionFilterProp='children'
-							    // onChange={onChange}
-							    // onFocus={onFocus}
-							    // onBlur={onBlur}
-							    // onSearch={onSearch}
 							    filterOption={(input, option) =>
 							      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
 							    }
@@ -249,6 +232,6 @@ export const OrderAdd = () => {
 					</Button>
 				</Form.Item>
 			</Form>
-		</>
+		</div>
 	);
 }

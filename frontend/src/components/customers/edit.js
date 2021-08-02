@@ -37,10 +37,10 @@ export const CustomerEdit = () => {
 	},[]);
 	useEffect(() => {
 		form.setFieldsValue({
-			first_name: customer.title,
-			last_name: customer.description,
-			email: customer.image,
-			phone_number: customer.price,
+			first_name: customer.first_name,
+			last_name: customer.last_name,
+			email: customer.email,
+			phone_number: customer.phone_number,
 			city: customer.city,
 			address: customer.address,
 			zip_code: customer.zip_code,
@@ -53,6 +53,7 @@ export const CustomerEdit = () => {
 	      		title="Edit customer">
 			</PageHeader>
 			<Form 
+				form={form}
 				name="basic"
 				labelCol={{
 					span: 8,

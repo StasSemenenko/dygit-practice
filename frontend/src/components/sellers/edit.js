@@ -18,12 +18,13 @@ export const SellerEdit = () => {
 			history.push('/sellers');
 		}
 		catch(e) {
-			const msg = e;
+			// const msg = e;
 			// = `${e.response.data.error}`;
             // if(e.response.data.errors) {
             //     msg += `${e.response.data.errors.join(', ')}`;
             // }
-            message.error(msg);
+            // message.error(msg);
+			console.log(e);
 		}
 	};
 
@@ -37,10 +38,10 @@ export const SellerEdit = () => {
 	},[]);
 	useEffect(() => {
 		form.setFieldsValue({
-			first_name: seller.title,
-			last_name: seller.description,
-			shop_name: seller.image,
-			phone_number: seller.price,
+			first_name: seller.first_name,
+			last_name: seller.last_name,
+			shop_name: seller.shop_name,
+			phone_number: seller.phone_number,
 			password: seller.password,
 			email: seller.email,
 			logo: seller.logo
@@ -53,6 +54,7 @@ export const SellerEdit = () => {
 		    	title="Edit seller">
 			</PageHeader>
 			<Form 
+				form={form}
 				name="basic"
 				labelCol={{
 					span: 8,

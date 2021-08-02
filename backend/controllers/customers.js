@@ -3,8 +3,9 @@ const Customer = require('../models/customer');
 
 module.exports = {
 	async getAllCustomers(req, res) {
-		const customers = await Customer.find().lean();
-		res.send({ customers });
+		const page = req.query.page || 1;
+		const data = await Customer.paginate({}, { page, limit: 10 });
+		res.send({ customers: data.docs, pages: data.totalPages, total: data.totalDocs });
 	},
 
 	async getOneCustomer(req, res) {

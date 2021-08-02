@@ -1,24 +1,31 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, PageHeader, Form, Input, Button, Upload,} from 'antd';
+import { Table, PageHeader, Form, Input, Button, Upload, Pagination} from 'antd';
 import http from '../../services/http';
 import { listColumns } from '../../constants/orders';
 
 
 export const OrdersList = () => {
 	const [orders, setOrders] = useState([]);
-	const getOrders = async () => {
-		// const r = await http.post('/auth/signin', {  email: 'stanislavsemenenko@gmail.com', password: '123465' });
-		const res = await http.get('/orders');
+	const [pagination, setPagination] = useState({
+		page: 1,
+		pages: 1,
+		total: 1
+	});
+	const getOrders = async (page = 1) => {
+		const res = await http.get(`/orders?page=${page}`);
 		const updateOrders = res.data.orders.map(o => {
 			o.products = o.products.reduce((accum, value) => {
 				return accum + `${value.product.title} x${value.quantity}\n`
 			},'')
-
-			// console.log(t)
 			return o;
 		});
 		setOrders(updateOrders);
+		setPagination({
+			page,
+			pages: res.data.pages,
+			total: res.data.total,
+		})
 	};
 	
 	useEffect(() => {
@@ -34,7 +41,8 @@ export const OrdersList = () => {
 	  		>
 				<button><Link to='/orders/add'>Add order</Link></button>
 			</PageHeader>
-				<Table xs ={24} md={{span: 12, offset: 6}} columns={listColumns} dataSource={orders} rowKey='_id'/>
+				<Table xs ={24} md={{span: 12, offset: 6}} columns={listColumns} dataSource={orders} pagination={false} rowKey='_id'/>
+				<Pagination defaultCurrent={1} defaultPageSize={10} total={pagination.total} onChange={(page) => getOrders(page)}/>
 		</>
 	)
 };

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const autoIncrement = require('mongoose-auto-increment');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const { Schema, model, Types } = mongoose;
 
@@ -41,7 +42,9 @@ const orderSchema = new Schema({
 		required: true,
 	},
 
-});
+}).plugin(mongoosePaginate);
+
 autoIncrement.initialize(mongoose.connection);
 orderSchema.plugin(autoIncrement.plugin, { model: 'Orders', field: 'order_number' });
+
 module.exports = model('Orders', orderSchema);

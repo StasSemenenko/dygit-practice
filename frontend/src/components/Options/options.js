@@ -1,4 +1,4 @@
-export const OptionItem =[ 
+export const OrderStatusItems =[ 
 	{value: 'created'},
 	{value: 'processing'},
 	{value: 'shipped'},

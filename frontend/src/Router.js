@@ -79,16 +79,16 @@ const Router = ({isAuth, history}) => {
 					<ProductView />
 				</Route>
 
-				<Route path="/orders/add">
+				<Route exact path="/orders/add">
 					<OrderAdd />
 				</Route>
-				<Route path="/orders/:id">
+				<Route exact path="/orders/:id">
 					<OrderView />
 				</Route>
-				<Route path="/orders/:id/edit">
-					<OrderEdit />
+				<Route exact path="/orders/:id/edit">
+					<OrderAdd />
 				</Route>
-				<Route path="/orders">
+				<Route exact path="/orders">
 					<OrdersList />
 				</Route>
 

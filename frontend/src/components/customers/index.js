@@ -1,28 +1,30 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Table, PageHeader, Form, Input, Button, Upload,} from 'antd';
+import { Table, PageHeader, Form, Input, Button, Upload, Pagination} from 'antd';
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import http from '../../services/http';
 import { listColumns } from '../../constants/customers';
 
 export const CustomersList = () => {
 	const [customers, setCustomers] = useState([]);
-	const getCustomers = async () => {
-		// const res = await Axios.post('/auth/signin', {  email: 'stanislavsemenenko@gmail.com', password: '123465' });
-		const res = await http.get('/customers');
+	const [pagination, setPagination] = useState({
+		page: 1,
+		pages: 1,
+		total: 1
+	});
+	const getCustomers = async (page = 1) => {
+		const res = await http.get(`/customers?page=${page}`);
 		setCustomers(res.data.customers);
+		setPagination({
+			page,
+			pages: res.data.pages,
+			total: res.data.total,
+		})
 	}
 	useEffect(() => {
 		getCustomers();
 	},[]);
 
-	// const normFile = (e: any) => {
-	// 	console.log('Upload event:', e);
-	// 	if (Array.isArray(e)) {
-	// 	  return e;
-	// 	}
-	// 	return e && e.fileList;
-	//   };
 	return (
 		<>
 			<PageHeader 
@@ -32,7 +34,8 @@ export const CustomersList = () => {
 	  		>
 				<button><Link to='/customers/add'>Add customer</Link></button>
 			</PageHeader>
-				<Table xs ={24} md={{span: 12, offset: 6}} columns={listColumns} dataSource={customers} rowKey='_id'/>
+				<Table xs ={24} md={{span: 12, offset: 6}} columns={listColumns} dataSource={customers} pagination={false} rowKey='_id'/>
+				<Pagination defaultCurrent={1} defaultPageSize={10} total={pagination.total} onChange={(page) => getCustomers(page)}/>
 		</>
 	)
 };

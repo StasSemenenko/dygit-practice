@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useHistory, useParams} from 'react-router-dom';
-import { Table, PageHeader, Form, Input, Button, Upload,} from 'antd';
-import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
+import { Table, PageHeader, Form, Input, Button, Upload, message, Select, Space } from 'antd';
+import { UploadOutlined, InboxOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import http from '../../services/http';
 import { FormItems } from '../../constants/orders';
 
@@ -30,15 +30,15 @@ export const OrderEdit = () => {
 		const res = await http.get(`/orders/${id}`);
 		setOrder(res.data.order);
 	}
+
 	useEffect(() => {
 		getOrder();
 	},[]);
 	useEffect(() => {
 		form.setFieldsValue({
-			customer: order.customer,
+			customer: order.customer?.first_name,
 			products: order.products,
-			quantity: order.quantity,
-			status: order.pricstatuse,
+			status: order.status,
 			amount: order.amount,
 		})
 	},[order])
@@ -49,6 +49,7 @@ export const OrderEdit = () => {
 	     		title="Edit order">
 			</PageHeader>
 			<Form 
+				form={form}
 				name="basic"
 				labelCol={{
 					span: 8,
@@ -56,20 +57,42 @@ export const OrderEdit = () => {
 			  	wrapperCol={{
 					span: 8,
 				}}
-				initialValues={{
-					remember: true,
-				}}
 			  	onFinish={onFinish}
 			>
-				{FormItems.map((item, index) => (
 					<Form.Item
-						key={index}
-						label={item.label}
-						name={item.name}
-						rules={ [{ required: true, message: item.errorMessage }] }>
+						label="customer"
+						name="customer"
+						rules={ [{ required: true, message: "Please input customer!" }] }>
 						<Input />
 					</Form.Item>
-					))}
+
+					<Form.Item
+						label="product"
+						name="product"
+						rules={ [{ required: true, message: "Please input product!" }] }>
+						<Input />
+					</Form.Item>
+
+					<Form.Item
+						label="quantity"
+						name="quantity"
+						rules={ [{ required: true, message: "Please input quantity!" }] }>
+						<Input />
+					</Form.Item>
+
+					<Form.Item
+						label="status"
+						name="status"
+						rules={ [{ required: true, message: "Please input customer!" }] }>
+						<Input />
+					</Form.Item>
+
+					<Form.Item
+						label="amount"
+						name="amount"
+						rules={ [{ required: true, message: "Please input amount!" }] }>
+						<Input />
+					</Form.Item>
 			
 				<Form.Item
 					wrapperCol={{

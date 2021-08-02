@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const sellerSchema = new Schema({
 	first_name: {
@@ -32,6 +33,6 @@ const sellerSchema = new Schema({
 		required: true,
 		default: 'https://i.pinimg.com/originals/78/09/98/780998409b52ce6887ce2ed101709033.png',
 	},
-});
+}).plugin(mongoosePaginate);
 
 module.exports = model('Seller', sellerSchema);

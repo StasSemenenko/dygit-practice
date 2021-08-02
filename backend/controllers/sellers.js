@@ -3,8 +3,11 @@ const Seller = require('../models/seller');
 
 module.exports = {
 	async getAllSellers(req, res) {
-		const sellers = await Seller.find().lean();
-		res.send({ sellers });
+		const page = req.query.page || 1;
+		const data = await Seller.paginate({}, { page, limit: 10 });
+		res.send({ sellers: data.docs, pages: data.totalPages, total: data.totalDocs });
+		// res.send(data);
+		console.log(data);
 	},
 
 	async getOneSeller(req, res) {
@@ -17,8 +20,10 @@ module.exports = {
 	},
 	async editSeller(req, res) {
 		const { id } = req.params;
+		console.log(id);
+
 		try {
-			await Seller.updateOne({ _id: id }, req.body);
+			await Seller.updateOne({ _id: id }, { $set: req.body });
 			res.send({ message: 'success' });
 		} catch (e) {
 			res.status(500).send({ error: 'Seller edit error' });
