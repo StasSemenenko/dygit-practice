@@ -10,6 +10,7 @@ const app = express();
 require('./database').connect();
 require('colors');
 
+app.use('/content', express.static('./content'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(session({

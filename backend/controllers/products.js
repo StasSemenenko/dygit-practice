@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Product = require('../models/product');
+const helper = require('../helper');
 
 module.exports = {
 	async getAllProducts(req, res) {
@@ -16,16 +17,22 @@ module.exports = {
 		const product = await Product.findOne({ _id: id }).populate('seller').lean();
 		return res.send({ product });
 	},
+
 	async createProduct(req, res) {
 		const {
-			title, description, image, price,
+			title, description, price,
 		} = req.body;
 		try {
+			if (!req.files) return res.status(422).send({ error: 'Image is required' });
+			const id = mongoose.Types.ObjectId();
+			const image = await helper.uploadFile(req.files.image, id);
+
 			await Product.create({
+				_id: id,
 				title,
 				description,
-				image,
 				price,
+				image,
 				seller: req.user,
 			});
 			res.send({ message: 'success' });
@@ -35,8 +42,22 @@ module.exports = {
 	},
 	async editProduct(req, res) {
 		const { id } = req.params;
+		const {
+			title, description, price,
+		} = req.body
 		try {
-			await Product.updateOne({ _id: id }, req.body);
+			if (!req.files) return res.status(422).send({ error: 'Image is required' });
+			const image = await helper.uploadFile(req.files.image, id);
+			
+			await Product.updateOne({ _id: id }, {
+				_id: id,
+				title,
+				description,
+				price,
+				image,
+				seller: req.user,
+			});
+			console.log(id);
 			res.send({ message: 'success' });
 		} catch (e) {
 			res.status(500).send({ error: 'Product edit error' });

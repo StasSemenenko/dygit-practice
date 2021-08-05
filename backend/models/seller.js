@@ -28,9 +28,8 @@ const sellerSchema = new Schema({
 		required: true,
 		unique: true,
 	},
-	logo: {
+	image: {
 		type: String,
-		required: true,
 		default: 'https://i.pinimg.com/originals/78/09/98/780998409b52ce6887ce2ed101709033.png',
 	},
 }).plugin(mongoosePaginate);

@@ -24,7 +24,6 @@ module.exports.createUser = (req, res, next) => {
 		phone_number: Joi.number().required(),
 		email: Joi.string().email().required(),
 		password: Joi.string().min(6).required(),
-		logo: Joi.string(),
 	});
 	validate(req, res, next, schema);
 };
@@ -37,7 +36,6 @@ module.exports.editSeller = (req, res, next) => {
 		phone_number: Joi.number(),
 		email: Joi.string().email(),
 		password: Joi.string().min(6),
-		logo: Joi.string(),
 	});
 	validate(req, res, next, schema);
 };
@@ -46,7 +44,6 @@ module.exports.createProduct = (req, res, next) => {
 	const schema = Joi.object({
 		title: Joi.string().required(),
 		description: Joi.string().required(),
-		image: Joi.string().required(),
 		price: Joi.number().required(),
 	});
 	validate(req, res, next, schema);
@@ -56,7 +53,6 @@ module.exports.editProduct = (req, res, next) => {
 	const schema = Joi.object({
 		title: Joi.string(),
 		description: Joi.string(),
-		image: Joi.string(),
 		price: Joi.number(),
 		seller: Joi.objectId(),
 	}).unknown(false);

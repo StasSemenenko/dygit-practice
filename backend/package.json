@@ -8,6 +8,7 @@
     "config": "^3.3.6",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
     "express-session": "^1.17.2",
     "global": "^4.4.0",
     "helmet": "^4.6.0",
