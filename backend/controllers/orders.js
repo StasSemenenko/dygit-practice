@@ -19,12 +19,14 @@ module.exports = {
 		if (!id || !mongoose.Types.ObjectId.isValid(id)) {
 			return res.status(422).send({ error: 'Bad order id' });
 		}
+		
 		const order = await Order.findOne({ _id: id })
 			.populate('seller')
 			.populate('customer')
 			.populate('products.product')
 			.lean();
-		return res.send({ order });
+
+		res.send({ order });
 	},
 
 	async createOrder(req, res) {
@@ -35,13 +37,6 @@ module.exports = {
 			quantity,
 			amount,
 		} = req.body;
-		console.log(
-			customer,
-			products,
-			status,
-			quantity,
-			amount,
-		);
 		try {
 			await Order.create({
 				seller: req.user,
@@ -53,7 +48,6 @@ module.exports = {
 			});
 			res.send({ message: 'success' });
 		} catch (e) {
-			console.log(e);
 			res.status(500).send({ error: 'Order create error' });
 		}
 	},

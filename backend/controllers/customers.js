@@ -14,7 +14,8 @@ module.exports = {
 			return res.status(422).send({ error: 'Bad customer id' });
 		}
 		const customer = await Customer.findOne({ _id: id }).lean();
-		return res.send({ customer });
+		
+		res.send({ customer });
 	},
 	async createCustomer(req, res) {
 		const {

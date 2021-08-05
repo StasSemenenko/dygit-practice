@@ -125,3 +125,8 @@ code {
 .ant-card-actions{
     box-shadow: 1px 10px 15px rgba(0, 0, 0, 0.1);
 }
+
+.home {
+    text-align: center;
+    padding: 50px;
+}

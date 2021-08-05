@@ -28,21 +28,19 @@ module.exports = {
 			if (e.code === 11000) {
 				return res.status(422).send({ error: 'User already exist' });
 			}
-			console.log(e);
-			return res.status(500).send({ error: 'Server error!' });
+			res.status(500).send({ error: 'Server error!' });
 		}
-		return res.send({ message: 'success' });
+		res.send({ message: 'success' });
 	},
 	async signIn(req, res) {
 		const { email, password } = req.body;
-		console.log(req.body);
 		const seller = await Seller.findOne({ email, password: md5(password) }, '+password');
 		if (!seller) return res.status(500).send({ error: 'User not found' });
 		const token = jwt.sign({ id: seller.id }, config.jwt_key);
 		req.session.token = token;
 		req.session.save();
 		// req.session.cookie.expires = new Date(Date.now() + 3600000);
-		return res.send({ message: 'success' });
+		res.send({ message: 'success' });
 	},
 	signOut(req, res) {
 		req.session.destroy(() => {

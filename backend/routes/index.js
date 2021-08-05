@@ -1,7 +1,6 @@
 const express = require('express');
 const auth = require('./auth');
 const sellers = require('./sellers');
-const profile = require('./profile');
 const products = require('./products');
 const customers = require('./customers');
 const orders = require('./orders');
@@ -11,7 +10,6 @@ const router = express.Router();
 
 router.use('/auth', auth);
 router.use('/sellers', tokenizer, sellers);
-router.use('/profile', tokenizer, profile);
 router.use('/products', tokenizer, products);
 router.use('/customers', tokenizer, customers);
 router.use('/orders', tokenizer, orders);

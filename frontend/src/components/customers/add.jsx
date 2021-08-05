@@ -12,7 +12,6 @@ export const CustomerAdd = () => {
   const [title, setTitle] = useState();
 
   const onFinish = async (values) => {
-    console.log('Success:', values);
     try {
       if (!id) await http.post('/customers', values);
       else await http.put(`/customers/${id}`, values);

@@ -14,7 +14,6 @@ export const ProductAdd = () => {
   const [title, setTitle] = useState();
 
   const onFinish = async (values) => {
-    console.log('Success:', values, image);
     const formData = new FormData();
     for (const name in values) {
       formData.append(name, values[name]);
@@ -52,7 +51,6 @@ export const ProductAdd = () => {
 
   const handleFile = (event) => {
     setImage(event.file);
-    console.log(event);
   };
 
   return (

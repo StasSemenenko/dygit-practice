@@ -10,7 +10,6 @@ export const AuthSignup = () => {
   const [image, setImage] = useState();
 
   const onFinish = async (values) => {
-    console.log('Success:', values, image);
     const formData = new FormData();
     for (const name in values) {
       formData.append(name, values[name]);
@@ -27,7 +26,6 @@ export const AuthSignup = () => {
 
   const handleFile = (event) => {
     setImage(event.file);
-    console.log(event);
   };
 
   return (

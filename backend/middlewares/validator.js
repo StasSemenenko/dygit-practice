@@ -13,7 +13,7 @@ function validate(req, res, next, schema) {
 			errors: error.details.map((e) => e.message),
 		});
 	}
-	return next();
+	next();
 }
 
 module.exports.createUser = (req, res, next) => {

@@ -13,14 +13,13 @@ export const SellerEdit = () => {
 	const [image, setImage] = useState();
 
 	const onFinish = async (values) => {
-		console.log('Success:', values);
 		const formData = new FormData();
 		for (const name in values) {
 			if (values[name]) formData.append(name, values[name]);
 		}
 		if (image) formData.append('image', image);
 		try {
-			const res = await http.put('/profile', formData);
+			const res = await http.put('/sellers/profile', formData);
 			history.push('/');
 		} catch (e) {
 			const msg = `${e.response.data.error}`;
@@ -29,7 +28,7 @@ export const SellerEdit = () => {
 	};
 
 	const getProfile = async () => {
-		const res = await http.get('/profile');
+		const res = await http.get('/sellers/profile');
 		setProfile(res.data.profile);
 	};
 	useEffect(() => {
@@ -49,14 +48,13 @@ export const SellerEdit = () => {
 
 	const handleFile = (event) => {
 		setImage(event.file);
-		console.log(event);
 	};
 
 	return (
 		<>
 			<PageHeader
 				className="site-page-header"
-				title="Edit seller"
+				title="Settings"
 				onBack={() => window.history.back()}
 			/>
 			<Form

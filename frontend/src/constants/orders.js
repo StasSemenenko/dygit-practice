@@ -24,7 +24,6 @@ export const listColumns = [
     title: 'Products',
     dataIndex: 'products',
     key: 'products',
-    // sorter: (a, b) => {return a.products.localeCompare(b.products)},
   },
   {
     title: 'Status',
@@ -67,4 +66,12 @@ export const FormItems = [
     name: 'amount',
     errorMessage: 'Please input amount!',
   },
+];
+
+export const OrderStatusItems = [
+	{ value: 'created' },
+	{ value: 'processing' },
+	{ value: 'shipped' },
+	{ value: 'received' },
+	{ value: 'cancelled' },
 ];

@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { PageHeader, Form, Input, Button, message, Select, Space } from 'antd';
 import { MinusCircleOutlined, PlusOutlined, } from '@ant-design/icons';
 import http from '../../services/http';
-import { OrderStatusItems } from '../Options/options';
+import { OrderStatusItems } from '../../constants/orders';
 
 export const OrderAdd = () => {
   const history = useHistory();
@@ -16,7 +16,6 @@ export const OrderAdd = () => {
   const [title, setTitle] = useState();
 
   const onFinish = async (values) => {
-    console.log('Success:', values);
     try {
       values.amount = totalAmount;
       if (!id) await http.post('/orders', values);
@@ -64,10 +63,8 @@ export const OrderAdd = () => {
   const calcAmount = () => {
     if (!products.length) return;
     const values = form.getFieldsValue();
-    console.log(values);
     const total = values?.products?.reduce((accum, item) => {
       if (!item || !item.product) return accum;
-      // console.log(item);
       const { price } = products.find((p) => p._id === item.product);
       return accum += price * (item.quantity || 0);
     }, 0);
@@ -198,10 +195,8 @@ export const OrderAdd = () => {
             </>
           )}
         </Form.List>
-        {/*  */}
 
         <Form.Item
-
           label="amount"
           name="amount"
         >

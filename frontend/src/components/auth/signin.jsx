@@ -3,7 +3,6 @@ import http from '../../services/http';
 
 export const AuthSignin = () => {
   const onFinish = async (values) => {
-    console.log('Success:', values);
     try {
       const res = await http.post('auth/signin', values);
       document.location.pathname = '/';

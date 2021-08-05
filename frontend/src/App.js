@@ -15,8 +15,6 @@ const App = () => {
     const res = await http.get('/auth/signout');
     document.cookie = '';
     document.location.pathname = '/auth/signin';
-    // history.push('/auth/signin');
-    console.log(res);
   };
 
   return (

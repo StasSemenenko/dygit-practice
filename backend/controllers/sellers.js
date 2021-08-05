@@ -6,29 +6,36 @@ module.exports = {
 		const page = req.query.page || 1;
 		const data = await Seller.paginate({}, { page, limit: 10 });
 		res.send({ sellers: data.docs, pages: data.totalPages, total: data.totalDocs });
-		// res.send(data);
-		console.log(data);
 	},
 
-	async getOneSeller(req, res) {
-		const { id } = req.params;
-		if (!id || !mongoose.Types.ObjectId.isValid(id)) {
-			return res.status(422).send({ error: 'Bad seller id' });
-		}
-		const seller = await Seller.findOne({ _id: id }).lean();
-		return res.send({ seller });
+	async getProfile(req, res) {
+		const profile = await Seller.findOne({ _id: req.user });
+		return res.send({ profile });
 	},
-	async editSeller(req, res) {
-		const { id } = req.params;
-		console.log(id);
+
+	async editProfile(req, res) {
+		const { first_name, last_name, image, email, phone_number, shop_name, password } = req.body;
+		const updater = {
+			first_name,
+			last_name,
+			email,
+			phone_number,
+			shop_name, 
+		}
+
+		if (password) updater.password = md5(password);
+		if (req.files && req.files.image) {
+			updater.image = await helper.uploadFile(req.files.image, req.user);
+		}
 
 		try {
-			await Seller.updateOne({ _id: id }, { $set: req.body });
+			await Seller.updateOne({ _id: req.user }, updater);
 			res.send({ message: 'success' });
 		} catch (e) {
-			res.status(500).send({ error: 'Seller edit error' });
+			res.status(500).send({ error: 'Profile edit error' });
 		}
 	},
+
 	async deleteSeller(req, res) {
 		const { id } = req.params;
 		try {

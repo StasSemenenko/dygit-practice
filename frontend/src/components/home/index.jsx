@@ -8,7 +8,7 @@ export const HomePage = () => {
         title='Главная станица'
         onBack={() => window.history.back()}
       />
-      <div className='ant-page-header'>
+      <div className='ant-page-header home'>
         <h1>Добро пожаловать</h1>
         <p style={{ fontSize: 15 }}>Выберите интересующие Вас пункты</p>
       </div>

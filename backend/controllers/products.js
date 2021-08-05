@@ -15,7 +15,7 @@ module.exports = {
 			return res.status(422).send({ error: 'Bad product id' });
 		}
 		const product = await Product.findOne({ _id: id }).populate('seller').lean();
-		return res.send({ product });
+		res.send({ product });
 	},
 
 	async createProduct(req, res) {
@@ -57,7 +57,6 @@ module.exports = {
 				image,
 				seller: req.user,
 			});
-			console.log(id);
 			res.send({ message: 'success' });
 		} catch (e) {
 			res.status(500).send({ error: 'Product edit error' });

@@ -15,7 +15,6 @@ export const OrderView = () => {
   const getOrder = async () => {
     const res = await http.get(`/orders/${id}`);
     res.data.order.products = res.data.order.products.reduce((accum, value) => `${accum}${value.product.title} x${value.quantity}\n`, '');
-    console.log(res.data.order);
     setOrder(res.data.order);
   };
   useEffect(() => {
